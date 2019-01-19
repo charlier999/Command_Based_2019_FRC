@@ -12,8 +12,23 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.ExampleCommand;
+import edu.wpi.first.wpilibj.Compressor;
+
+// Subsystem imports
+
 import frc.robot.subsystems.ExampleSubsystem;
+
+import frc.robot.subsystems.Hatch;
+import frc.robot.subsystems.Grabber;
+
+import frc.robot.subsystems.Climber;
+
+import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.Elevator;
+
+// Commands Imports
+
+import frc.robot.commands.ExampleCommand;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,7 +38,20 @@ import frc.robot.subsystems.ExampleSubsystem;
  * project.
  */
 public class Robot extends TimedRobot {
-  public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
+  
+  // Subsystems
+
+  public static ExampleSubsystem sub_subsystem = new ExampleSubsystem();
+
+  public static Hatch sub_hatch = new Hatch();
+  public static Grabber sub_grabber = new Grabber();
+
+  public static Climber sub_climber = new Climber(); 
+
+  public static Drive sub_drive = new Drive();
+
+  public static Elevator sub_elevator = new Elevator();
+
   public static OI m_oi;
 
   Command m_autonomousCommand;
@@ -35,12 +63,17 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    
     m_oi = new OI();
+
     m_chooser.setDefaultOption("Default Auto", new ExampleCommand());
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
+    
+    Compressor compressor = new Compressor(0);
+    compressor.setClosedLoopControl(true);
   }
-
+    
   /**
    * This function is called every robot packet, no matter the mode. Use
    * this for items like diagnostics that you want ran during disabled,
